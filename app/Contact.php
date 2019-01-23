@@ -2,14 +2,14 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Contact extends Model
 {
     protected $fillable = ['surname', 'name', 'patronymic'];
-    
+    protected $arrayable = ['id', 'surname', 'name', 'patronymic', 'updated_at', 'created_at'];
+    protected $with = ['phones'];
+
     public function phones()
     {
-        return $this->belongsToMany('App\Phone')->withTimestamps();
+        return $this->hasMany('App\Phone');
     }
 }

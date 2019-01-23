@@ -38,7 +38,11 @@ class ContactsController extends Controller
             return response()->json(['errors' => $validator->errors()], 400);
         }
         
-        return Contact::create($data);
+        $contact = Contact::create($data);
+        
+        //$contact->refresh();
+        
+        return $contact;
     }
 
     /**
