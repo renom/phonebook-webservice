@@ -9,18 +9,18 @@ class Model extends \Illuminate\Database\Eloquent\Model
     
     protected function getArrayableItems(array $values)
     {
-        $values = parent::getArrayableItems($values);
+        $items = parent::getArrayableItems($values);
         
         if (!empty($this->arrayable)) {
             $result = [];
             foreach ($this->arrayable as $field) {
-                if (isset($values[$field])) {
-                    $result[$field] = $values[$field];
+                if (isset($items[$field])) {
+                    $result[$field] = $items[$field];
                 }
             }
             return $result;
         } else {
-            return $values;
+            return $items;
         }
     }
 }
