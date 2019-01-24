@@ -10,6 +10,6 @@ class Contact extends Model
 
     public function phones()
     {
-        return $this->hasMany('App\Phone');
+        return $this->hasMany('App\Phone')->without('contact');
     }
 }

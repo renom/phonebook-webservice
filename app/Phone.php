@@ -10,6 +10,6 @@ class Phone extends Model
 
     public function contact()
     {
-        return $this->belongsTo('App\Contact');
+        return $this->belongsTo('App\Contact')->without('phones');
     }
 }
