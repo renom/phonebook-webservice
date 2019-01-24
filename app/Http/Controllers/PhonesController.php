@@ -30,7 +30,7 @@ class PhonesController extends Controller
         
         $validator = Validator::make($data, [
             'number' => 'required|max:45',
-            'contact_id' => 'integer|min:0|exists:contacts,id',
+            'contact_id' => 'required|integer|min:0|exists:contacts,id',
         ]);
         
         if ($validator->fails()) {
@@ -64,7 +64,7 @@ class PhonesController extends Controller
         
         $validator = Validator::make($data, [
             'number' => 'required|max:45',
-            'contact_id' => 'integer|min:0|exists:contacts,id',
+            'contact_id' => 'required|integer|min:0|exists:contacts,id',
         ]);
         
         if ($validator->fails()) {
