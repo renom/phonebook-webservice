@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Validator;
+use App\Http\Requests\StoreContact;
+use App\Http\Requests\UpdateContact;
 use App\Contact;
 
 class ContactsController extends Controller
@@ -24,25 +24,9 @@ class ContactsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreContact $request)
     {
-        $data = json_decode($request->getContent(), true);
-        
-        $validator = Validator::make($data, [
-            'surname' => 'required|max:45',
-            'name' => 'required|max:45',
-            'patronymic' => 'required|max:45',
-        ]);
-        
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
-        
-        $contact = Contact::create($data);
-        
-        //$contact->refresh();
-        
-        return $contact;
+        return Contact::create($request->validated());
     }
 
     /**
@@ -63,22 +47,10 @@ class ContactsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateContact $request, $id)
     {
-        $data = json_decode($request->getContent(), true);
-        
-        $validator = Validator::make($data, [
-            'surname' => 'required|max:45',
-            'name' => 'required|max:45',
-            'patronymic' => 'required|max:45',
-        ]);
-        
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
-        
         $contact = Contact::findOrFail($id);
-        $contact->update($data);
+        $contact->update($request->validated());
         
         return $contact;
     }

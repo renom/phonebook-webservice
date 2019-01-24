@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Validator;
+use App\Http\Requests\StorePhone;
+use App\Http\Requests\UpdatePhone;
 use App\Phone;
 
 class PhonesController extends Controller
@@ -24,20 +24,9 @@ class PhonesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePhone $request)
     {
-        $data = json_decode($request->getContent(), true);
-        
-        $validator = Validator::make($data, [
-            'number' => 'required|max:45',
-            'contact_id' => 'required|integer|min:0|exists:contacts,id',
-        ]);
-        
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
-        
-        return Phone::create($data);
+        return Phone::create($request->validated());
     }
 
     /**
@@ -58,21 +47,10 @@ class PhonesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePhone $request, $id)
     {
-        $data = json_decode($request->getContent(), true);
-        
-        $validator = Validator::make($data, [
-            'number' => 'required|max:45',
-            'contact_id' => 'required|integer|min:0|exists:contacts,id',
-        ]);
-        
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
-        
         $phone = Phone::findOrFail($id);
-        $phone->update($data);
+        $phone->update($request->validated());
         
         return $phone;
     }
