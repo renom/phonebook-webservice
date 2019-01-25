@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\IndexContact;
 use App\Http\Requests\StoreContact;
 use App\Http\Requests\UpdateContact;
 use App\Contact;
@@ -13,9 +15,39 @@ class ContactsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(IndexContact $request)
     {
-        return Contact::paginate()->getCollection();
+        $filters = $request->validated();
+        $contacts = Contact::query();
+        
+        if (!empty($filters['fullname'])) {
+            $contacts->where(DB::raw("CONCAT_WS(' ', `surname`, `name`, `patronymic`)"), 'like', '%' . $filters['fullname'] . '%');
+        }
+        if (!empty($filters['surname'])) {
+            $contacts->where('surname', 'like', '%' . $filters['surname'] . '%');
+        }
+        if (!empty($filters['name'])) {
+            $contacts->where('name', 'like', '%' . $filters['name'] . '%');
+        }
+        if (!empty($filters['patronymic'])) {
+            $contacts->where('patronymic', 'like', '%' . $filters['patronymic'] . '%');
+        }
+        if (!empty($filters['updated_at'])) {
+            $contacts->where('updated_at', 'like', '%' . $filters['updated_at'] . '%');
+        }
+        if (!empty($filters['created_at'])) {
+            $contacts->where('created_at', 'like', '%' . $filters['created_at'] . '%');
+        }
+        if (!empty($filters['phone'])) {
+            $contacts->whereHas('phones', function ($query) use ($filters) {
+                $query->where('number', 'like', '%' . $filters['phone'] . '%');
+            });
+        }
+        if (!empty($filters['sort'])) {
+            $contacts->sort($filters['sort']);
+        }
+        
+        return $contacts->paginate()->getCollection();
     }
 
     /**
