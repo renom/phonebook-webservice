@@ -24,7 +24,7 @@ class StorePhone extends FormRequest
     public function rules()
     {
         return [
-            'number' => 'required|max:45',
+            'number' => 'required|min:3|max:45|regex:/^\+?\d+$/',
             'contact_id' => 'required|integer|min:0|exists:contacts,id',
         ];
     }

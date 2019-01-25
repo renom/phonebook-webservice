@@ -24,7 +24,7 @@ class UpdatePhone extends FormRequest
     public function rules()
     {
         return [
-            'number' => 'max:45',
+            'number' => 'min:3|max:45|regex:/^\+?\d+$/',
             'contact_id' => 'integer|min:0|exists:contacts,id',
         ];
     }
