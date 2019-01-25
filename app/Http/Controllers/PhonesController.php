@@ -11,7 +11,21 @@ use App\Phone;
 class PhonesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the phones.
+     *
+     * @OA\Get(
+     *     path="/v1/phones",
+     *     summary="Returns phones (paginated)",
+     *     @OA\Parameter(ref="#/components/parameters/page"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/PhoneWithContact")
+     *         )
+     *     )
+     * )
      *
      * @return \Illuminate\Http\Response
      */
@@ -57,7 +71,21 @@ class PhonesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created phone in storage.
+     *
+     * @OA\Post(
+     *     path="/v1/phones",
+     *     summary="Creates a new phone",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/PhoneForm")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/PhoneWithContact")
+     *     )
+     * )
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -68,7 +96,18 @@ class PhonesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified phone.
+     *
+     * @OA\Get(
+     *     path="/v1/phones/{phoneId}",
+     *     summary="Returns a single phone",
+     *     @OA\Parameter(ref="#/components/parameters/phoneId"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/PhoneWithContact")
+     *     )
+     * )
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -79,7 +118,22 @@ class PhonesController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified phone in storage.
+     *
+     * @OA\Patch(
+     *     path="/v1/phones/{phoneId}",
+     *     summary="Updates an existing phone",
+     *     @OA\Parameter(ref="#/components/parameters/phoneId"),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/PhoneForm")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/PhoneWithContact")
+     *     )
+     * )
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -94,7 +148,17 @@ class PhonesController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified phone from storage.
+     *
+     * @OA\Delete(
+     *     path="/v1/phones/{phoneId}",
+     *     summary="Removes a single phone",
+     *     @OA\Parameter(ref="#/components/parameters/phoneId"),
+     *     @OA\Response(
+     *         response=204,
+     *         description="successful operation",
+     *     )
+     * )
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

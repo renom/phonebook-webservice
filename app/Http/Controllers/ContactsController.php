@@ -11,7 +11,21 @@ use App\Contact;
 class ContactsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the contacts.
+     *
+     * @OA\Get(
+     *     path="/v1/contacts",
+     *     summary="Returns contacts (paginated)",
+     *     @OA\Parameter(ref="#/components/parameters/page"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/ContactWithPhones")
+     *         )
+     *     )
+     * )
      *
      * @return \Illuminate\Http\Response
      */
@@ -51,7 +65,21 @@ class ContactsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created contact in storage.
+     *
+     * @OA\Post(
+     *     path="/v1/contacts",
+     *     summary="Creates a new contact",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/ContactForm")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/ContactWithPhones")
+     *     )
+     * )
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -62,7 +90,18 @@ class ContactsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified contact.
+     *
+     * @OA\Get(
+     *     path="/v1/contacts/{contactId}",
+     *     summary="Returns a single contact",
+     *     @OA\Parameter(ref="#/components/parameters/contactId"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/ContactWithPhones")
+     *     )
+     * )
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -73,7 +112,22 @@ class ContactsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified contact in storage.
+     *
+     * @OA\Patch(
+     *     path="/v1/contacts/{contactId}",
+     *     summary="Updates an existing contact",
+     *     @OA\Parameter(ref="#/components/parameters/contactId"),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/ContactForm")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/ContactWithPhones")
+     *     )
+     * )
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -88,7 +142,17 @@ class ContactsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified contact from storage.
+     *
+     * @OA\Delete(
+     *     path="/v1/contacts/{contactId}",
+     *     summary="Removes a single contact",
+     *     @OA\Parameter(ref="#/components/parameters/contactId"),
+     *     @OA\Response(
+     *         response=204,
+     *         description="successful operation",
+     *     )
+     * )
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
