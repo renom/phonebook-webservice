@@ -69,7 +69,7 @@ class ContactsController extends Controller
      */
     public function show($id)
     {
-        return Contact::find($id);
+        return Contact::findOrFail($id);
     }
 
     /**

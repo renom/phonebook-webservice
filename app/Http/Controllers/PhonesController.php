@@ -75,7 +75,7 @@ class PhonesController extends Controller
      */
     public function show($id)
     {
-        return Phone::find($id);
+        return Phone::findOrFail($id);
     }
 
     /**

@@ -29,3 +29,7 @@ Route::get('v1/phones/{id}', 'PhonesController@show');
 Route::post('v1/phones', 'PhonesController@store');
 Route::patch('v1/phones/{id}', 'PhonesController@update');
 Route::delete('v1/phones/{id}', 'PhonesController@delete');
+// Handle incorrect routes
+Route::fallback(function () {
+    return response()->json(['message' => 'Resource not found.'], 404);
+});
