@@ -21,8 +21,22 @@ class PhonesController extends Controller
      *         response=200,
      *         description="successful operation",
      *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/PhoneWithContact")
+     *             @OA\Property(property="current_page", ref="#/components/schemas/page"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(ref="#/components/schemas/PhoneWithContact")
+     *             ),
+     *             @OA\Property(property="first_page_url", ref="#/components/schemas/url"),
+     *             @OA\Property(property="from", ref="#/components/schemas/from"),
+     *             @OA\Property(property="last_page", ref="#/components/schemas/page"),
+     *             @OA\Property(property="last_page_url", ref="#/components/schemas/url"),
+     *             @OA\Property(property="next_page_url", ref="#/components/schemas/url"),
+     *             @OA\Property(property="path", ref="#/components/schemas/url"),
+     *             @OA\Property(property="per_page", ref="#/components/schemas/per-page"),
+     *             @OA\Property(property="prev_page_url", ref="#/components/schemas/url"),
+     *             @OA\Property(property="to", ref="#/components/schemas/to"),
+     *             @OA\Property(property="total", ref="#/components/schemas/total"),
      *         )
      *     )
      * )
@@ -67,7 +81,7 @@ class PhonesController extends Controller
             $phones->sort($filters['sort']);
         }
         
-        return $phones->paginate()->getCollection();
+        return $phones->paginate();
     }
 
     /**
