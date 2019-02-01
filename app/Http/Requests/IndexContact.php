@@ -31,7 +31,7 @@ class IndexContact extends FormRequest
             'updated_at' => 'string',
             'created_at' => 'string',
             'phone' => 'max:45',
-            'sort' => 'in:id,-id,surname,-surname,name,-name,patronymic,-patronymic,updated_at,-updated_at,created_at,-created_at',
+            'sort' => 'in:id,-id,fullname,-fullname,surname,-surname,name,-name,patronymic,-patronymic,updated_at,-updated_at,created_at,-created_at',
         ];
     }
 }

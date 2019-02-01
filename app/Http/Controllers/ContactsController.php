@@ -46,10 +46,10 @@ class ContactsController extends Controller
     public function index(IndexContact $request)
     {
         $filters = $request->validated();
-        $contacts = Contact::query();
+        $contacts = Contact::query()->selectRaw("*, CONCAT_WS(' ', `surname`, `name`, `patronymic`) as fullname");
         
         if (!empty($filters['fullname'])) {
-            $contacts->where(DB::raw("CONCAT_WS(' ', `surname`, `name`, `patronymic`)"), 'like', '%' . $filters['fullname'] . '%');
+            $contacts->where('fullname', 'like', '%' . $filters['fullname'] . '%');
         }
         if (!empty($filters['surname'])) {
             $contacts->where('surname', 'like', '%' . $filters['surname'] . '%');
