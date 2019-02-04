@@ -24,7 +24,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
         }
     }
     
-    public function scopeSort($query, $sort)
+    public function scopeSort($query, $sort, $columns = [])
     {
         if ($sort[0] === '-') {
             $column = substr($sort, 1);
@@ -34,6 +34,10 @@ class Model extends \Illuminate\Database\Eloquent\Model
             $direction = 'asc';
         }
         
-        return $query->orderBy($column, $direction);
+        if (isset($columns[$column])) {
+            return $query->orderBy($columns[$column], $direction);
+        } else {
+            return $query->orderBy($column, $direction);
+        }
     }
 }
