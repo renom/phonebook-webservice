@@ -1,5 +1,5 @@
 ## Task
-Create a simple web service which implements phone book storage.
+Create a simple web service which implements a phone book storage.
 
 ## Technologies
 PHP, Laravel, MySQL, Composer.
